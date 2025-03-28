@@ -1,6 +1,7 @@
 package request
 
 import (
+	"bytes"
 	"errors"
 	"io"
 	"regexp"
@@ -31,7 +32,7 @@ var capAlphaRegex = regexp.MustCompile(`^[A-Z]+$`)
 
 func parseRequestLine(data []byte) (*RequestLine, int, error) {
 	numOfBytes := 0
-	newLineIndex := strings.Index(string(data), crlf)
+	newLineIndex := bytes.Index(data, []byte(crlf))
 	if newLineIndex == -1 {
 		return nil, numOfBytes, nil
 	}

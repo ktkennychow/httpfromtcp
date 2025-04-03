@@ -20,14 +20,18 @@ func main() {
 			log.Fatal(err)
 		}
 		fmt.Println("A connection has been accepted")
-		requestLine, err := request.RequestFromReader(connection) 
-    if err != nil {
-      log.Fatal(err)
-    }
-    fmt.Println("Request line:")
-    fmt.Println("- Method:", requestLine.RequestLine.Method)
-    fmt.Println("- Target:", requestLine.RequestLine.RequestTarget)
-    fmt.Println("- Version:", requestLine.RequestLine.HttpVersion)
+		request, err := request.RequestFromReader(connection)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println("Request line:")
+		fmt.Println("- Method:", request.RequestLine.Method)
+		fmt.Println("- Target:", request.RequestLine.RequestTarget)
+		fmt.Println("- Version:", request.RequestLine.HttpVersion)
+		fmt.Println("Headers:")
+		for k, v := range request.Headers {
+			fmt.Printf("- %s: %s\n", k, v)
+		}
 		fmt.Println("A connection has been closed")
 	}
 }
